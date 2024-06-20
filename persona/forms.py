@@ -1,7 +1,6 @@
 from django import forms
-from .models import Persona
 
-class PersonaForm(forms.ModelForm):
-    class Meta:
-        model = Persona
-        fields = '__all__'
+
+class DatosPersonaForm(forms.Form):
+    nombre = forms.CharField(label='Nombre', max_length=100)
+    edad = forms.IntegerField(label='Edad')

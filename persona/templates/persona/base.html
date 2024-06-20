@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% comment %} <!DOCTYPE html>
 <html lang="en">
     {% load static %}
 
@@ -19,7 +19,7 @@
         <link href={% static 'css/styles.css' %} rel="stylesheet" />
         <title>
             {% block title_head  %}
-            Mi sitio web
+           
             {% endblock title_head %}
         </title>
 
@@ -29,18 +29,11 @@
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
-
-
-                {% block content %}
-                
-                {% endblock  %}
-
-
-
-                <a class="navbar-brand" href="#!">Start Bootstrap</a>
+              
                 <a class="btn btn-primary" href={% url 'inicio' %}>Pagina principal</a>
                 <a class="btn btn-primary" href={% url 'datos_persona' %}> datos </a>
-              
+                <a class="btn btn-primary" href={% url 'lista_persona' %}>Ver Lista de Personas</a>
+
             </div>
         </nav>
         <!-- Masthead-->
@@ -73,6 +66,10 @@
             </div>
             {% endblock header %}
         </header>
+
+        {% block main %}
+
+        {% endblock main %}
     
       
         
@@ -119,4 +116,77 @@
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
+</html> {% endcomment %}
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title_head %}Mi sitio web{% endblock title_head %}</title>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <!-- Otros enlaces a CSS, fuentes, iconos, etc. -->
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light static-top">
+        <div class="container">
+            <a class="btn btn-primary" href="{% url 'inicio' %}">Página principal</a>
+            <a class="btn btn-primary" href="{% url 'datos_persona' %}">Ingresar Datos</a>
+            <a class="btn btn-primary" href="{% url 'lista_persona' %}">Ver Lista de Personas</a>
+        </div>
+    </nav>
+    <header class="masthead">
+        <div class="container position-relative">
+            <div class="row justify-content-center">
+                <div class="col-xl-6">
+                    <div class="text-center text-white">
+                        {% block h1_header %}
+                            <h1 class="mb-5">PÁGINA PRINCIPAL</h1>
+                        {% endblock h1_header %}
+                        <!-- Otros elementos del encabezado -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+    <footer class="footer bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
+                    <ul class="list-inline mb-2">
+                        <li class="list-inline-item"><a href="#">About</a></li>
+                        <li class="list-inline-item">⋅</li>
+                        <li class="list-inline-item"><a href="#">Contact</a></li>
+                        <li class="list-inline-item">⋅</li>
+                        <li class="list-inline-item"><a href="#">Terms of Use</a></li>
+                        <li class="list-inline-item">⋅</li>
+                        <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                    </ul>
+                    <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2023. All Rights Reserved.</p>
+                </div>
+                <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item me-4"><a href="#"><i class="bi-facebook fs-3"></i></a></li>
+                        <li class="list-inline-item me-4"><a href="#"><i class="bi-twitter fs-3"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="bi-instagram fs-3"></i></a></li>
+                        <!-- Otros enlaces a redes sociales -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <!-- Otros scripts JavaScript -->
+</body>
 </html>

@@ -1,0 +1,16 @@
+{% extends 'persona/base.html' %}
+
+{% block title_head %}
+    Lista de Personas
+{% endblock title_head %}
+
+{% block content %}
+    <div class="container">
+        <h2>Lista de Personas</h2>
+        <ul>
+            {% for persona in personas %}
+                <li>{{ persona.nombre }} - Edad: {{ persona.edad }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock content %}

@@ -1,51 +1,29 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-#V1
+from django.shortcuts import render, redirect
+
+from .models import Persona
+from .forms import DatosPersonaForm
 
 def inicio(request):
      return render(request,'persona/index.html')
 #     return HttpResponse('Bienvenidos a mi inicio!')
 
+def datos_persona(request):
+    formulario = DatosPersonaForm()
+
+    if request.method == 'POST':
+        formulario = DatosPersonaForm(request.POST)
+        if formulario.is_valid():
+            nombre = formulario.cleaned_data['nombre']
+            edad = formulario.cleaned_data['edad']
+            # Procesar los datos como desees, por ejemplo, guardarlos en la base de datos
+            persona = Persona(nombre=nombre, edad=edad)
+            persona.save()
+            return redirect('inicio')  # Redirige a la página de inicio después de procesar el formulario
+
+    return render(request, 'persona/datos_persona.html', {'formulario': formulario})
 
 
-from django.shortcuts import render, redirect
-from .models import Persona
-from .forms import PersonaForm
 
-def lista_personas(request):
-    personas = Persona.objects.all()
+def lista_persona(request):
+    personas = Persona.objects.all()  
     return render(request, 'persona/lista_personas.html', {'personas': personas})
-
-def crear_persona(request):
-    if request.method == 'POST':
-        form = PersonaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_personas')
-    else:
-        form = PersonaForm()
-    return render(request, 'persona/crear_persona.html', {'form': form})
-
-def detalle_persona(request, pk):
-    persona = Persona.objects.get(pk=pk)
-    return render(request, 'persona/detalle_persona.html', {'persona': persona})
-
-def editar_persona(request, pk):
-    persona = Persona.objects.get(pk=pk)
-    if request.method == 'POST':
-        form = PersonaForm(request.POST, instance=persona)
-        if form.is_valid():
-            form.save()
-            return redirect('detalle_persona', pk=pk)
-    else:
-        form = PersonaForm(instance=persona)
-    return render(request, 'persona/editar_persona.html', {'form': form, 'persona': persona})
-
-def eliminar_persona(request, pk):
-    persona = Persona.objects.get(pk=pk)
-    if request.method == 'POST':
-        persona.delete()
-        return redirect('lista_personas')
-    return render(request, 'persona/confirmar_eliminar_persona.html', {'persona': persona})
-
-
